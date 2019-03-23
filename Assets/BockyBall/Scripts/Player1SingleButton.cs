@@ -72,7 +72,6 @@ public class Player1SingleButton : MonoBehaviour {
 
     public void SwitchDirection()
     {
-        Debug.Log("Sitch Direction");
         goingLeft = !goingLeft;
     }
 

@@ -5,12 +5,12 @@ using UnityEngine.SceneManagement;
 
 public class BallManager : MonoBehaviour {
 
-    private void OnCollisionEnter(Collision col)
+    private void OnCollisionStay(Collision col)
     {
         if (col.gameObject.tag == "Ground")
         {
             if (GameStateManager.S.timeLeft <= 0) {
-                SceneManager.LoadScene("Scene_Game");
+                GameStateManager.S.EndGame();
             }
         }
     }
