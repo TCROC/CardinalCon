@@ -6,52 +6,22 @@ public class Player1SingleButton : MonoBehaviour {
 
     public bool goingLeft;
 
-    public float doublePressTime = .1f;
-
-    public int pressCount;
-    
-    public float pressTime;
-
-    public Action singlePress;
-    public Action doublePress;
-
-    Coroutine singlePressRoutine;
-
     public float moveSpeed = 10;
     public float accelerationSpeed = 1;
 
-    float? prevXVel;
+    private float? prevXVel;
 
-    public bool isJumping;
-
-    public KeyCode inputKey;
+    private bool isJumping;
 
     private void Start()
     {
-        singlePress += SwitchDirection;
-        doublePress += Jump;
+        SingleInput i = GetComponent<SingleInput>();
+        i.onDoublePress += Jump;
+        i.onSinglePress += SwitchDirection;
     }
 
     private void Update()
     {
-        if (Input.GetKeyDown(inputKey))
-        {
-            pressCount++;
-
-            if (Time.time - pressTime < doublePressTime && pressCount >= 2)
-            {
-                doublePress.Invoke();
-                StopCoroutine(singlePressRoutine);
-                pressCount = 0;
-                pressTime = 0;
-            } else
-            {
-                pressCount = 1;
-                pressTime = Time.time;
-                singlePressRoutine = StartCoroutine(SinglePress());
-            }
-        }
-
         Movement();
     }
 
@@ -97,16 +67,6 @@ public class Player1SingleButton : MonoBehaviour {
             Vector3 tempVel = transform.GetComponent<Rigidbody>().velocity;
             tempVel.y = -10;
             transform.GetComponent<Rigidbody>().velocity = tempVel;
-        }
-    }
-
-    public IEnumerator SinglePress()
-    {
-        yield return new WaitForSeconds(doublePressTime);
-        if (pressCount == 1)
-        {
-            pressCount = 0;
-            singlePress.Invoke();
         }
     }
 
