@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class GameStateManager : MonoBehaviour {
@@ -19,6 +21,8 @@ public class GameStateManager : MonoBehaviour {
 
 	int team1Score, team2Score;
     public Text team1ScoreDisplay, team2ScoreDisplay, timer;
+
+    public TextMeshProUGUI tmpEndGame;
 
     public bool pauseTimer;
 
@@ -39,7 +43,7 @@ public class GameStateManager : MonoBehaviour {
 	}
 
     IEnumerator Timer () {
-		while (!pauseTimer)
+		while (!pauseTimer && timeLeft > 0)
         {
             timeLeft--;
 			pauseTimer = timeLeft <= 0;
@@ -92,5 +96,35 @@ public class GameStateManager : MonoBehaviour {
             team1Score++;
             team1ScoreDisplay.text = team1Score.ToString();
 		}
+    }
+
+    public void EndGame()
+    {
+        StartCoroutine(ReturnToMenuCo());
+
+        tmpEndGame.gameObject.SetActive(true);
+
+        if (team1Score > team2Score)
+        {
+            tmpEndGame.text = "Blue Player Wins!";
+        }
+        else if (team2Score > team1Score)
+        {
+            tmpEndGame.text = "Red Player Wins!";
+        }
+        else if (team1Score == team2Score)
+        {
+            tmpEndGame.text = "There was a tie... you are both a dissapointment.";
+        }
+        else
+        {
+            Debug.Log("I have absolutely on idea how you could have possible gotten here.");
+        }
+    }
+
+    IEnumerator ReturnToMenuCo()
+    {
+        yield return new WaitForSeconds(5);
+        SceneManager.LoadScene(0);
     }
 }
