@@ -26,7 +26,7 @@ public class PingPong : MonoBehaviour
         while (percentageComplete < 1)
         {
             transform.position = Vector3.LerpUnclamped(startPos, point.position, percentageComplete);
-            percentageComplete = animationCurve.Evaluate(Time.time - startTime);
+            percentageComplete = animationCurve.Evaluate((Time.time - startTime) / timeToComplete);
             yield return null;
         }
 

@@ -7,9 +7,9 @@ public class BeatMovement : MonoBehaviour
 {
     public Transform endPoint;
 
-    public float timeToComplete;
+    public float timeToComplete = 10;
 
-    public AnimationCurve animationCurve = new AnimationCurve(new Keyframe(0, 0), new Keyframe(0, 1));
+    public AnimationCurve animationCurve = new AnimationCurve(new Keyframe(0, 0), new Keyframe(1, 1));
 
     public UnityEvent onAnimationComplete;
 
@@ -28,7 +28,7 @@ public class BeatMovement : MonoBehaviour
         while (percentageComplete < 1)
         {
             transform.position = Vector3.LerpUnclamped(startPos, point.position, percentageComplete);
-            percentageComplete = animationCurve.Evaluate(Time.time - startTime);
+            percentageComplete = animationCurve.Evaluate((Time.time - startTime) / timeToComplete);
             yield return null;
         }
 
