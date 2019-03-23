@@ -47,6 +47,9 @@ public class SingleInput : MonoBehaviour
             if (Time.time - pressTime > _longPressTime)
             {
                 onLongPress?.Invoke();
+                StopCoroutine(_singlePressRoutine);
+                pressCount = 0;
+                pressTime = 0;
             }
         }
     }
