@@ -4,8 +4,6 @@ using UnityEngine;
 
 public class BeatGenerator : MonoBehaviour
 {
-    public float beatStartSpeed = 2;
-    public float beatEndSpeed = 5;
 
     public float xOffset;
 
@@ -18,11 +16,6 @@ public class BeatGenerator : MonoBehaviour
 
     private float currentSpawnTimeToWait;
     private float _currentSpawnTime;
-
-    private void Start()
-    {
-        Beat.beatSpeed = beatStartSpeed;
-    }
 
     private void Update()
     {

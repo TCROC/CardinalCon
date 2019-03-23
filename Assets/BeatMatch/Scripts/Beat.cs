@@ -32,6 +32,11 @@ public class Beat : MonoBehaviour
             Destroy(gameObject);
         }
 
+        if (beatSpeed <= 0 || float.IsNaN(beatSpeed))
+        {
+            beatSpeed = 2;
+        }
+
         transform.Translate(Vector3.back * beatSpeed * Time.smoothDeltaTime);
     }
 }
