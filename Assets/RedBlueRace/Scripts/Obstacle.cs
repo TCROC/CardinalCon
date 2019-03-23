@@ -19,6 +19,7 @@ public class Obstacle : MonoBehaviour
 
     public void OnCollisionEnter(Collision collision)
     {
-        gameObject.GetComponent<Rigidbody>().AddForce(Vector3.left * forceStrength, ForceMode.Impulse);
+        Rigidbody collidedRigidbody = collision.gameObject.GetComponent<Rigidbody>();
+        collidedRigidbody.AddForce(Vector3.left * forceStrength, ForceMode.Impulse);
     }
 }

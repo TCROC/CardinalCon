@@ -22,6 +22,10 @@ public class RacerController : MonoBehaviour
 
     public bool isJumping;
 
+    public float obstactleDropTime = 5;
+
+    private float obstactleDropTimeStart;
+
     private void Start()
     {
         myRigidBody = GetComponent<Rigidbody>();
@@ -38,7 +42,9 @@ public class RacerController : MonoBehaviour
     public void Move()
     {
         if (!isJumping)
+        {
             myRigidBody.AddForce(Vector3.right * moveSpeed);
+        }
     }
 
     public void Jump()
@@ -55,7 +61,11 @@ public class RacerController : MonoBehaviour
 
     public void DropObstacle()
     {
-        Instantiate(obstaclePrefab, transform.position, Quaternion.identity);
+        if (Time.time - obstactleDropTimeStart > obstactleDropTime)
+        {
+            Instantiate(obstaclePrefab, transform.position, Quaternion.identity);
+            obstactleDropTimeStart = Time.time;
+        }
     }
 
     private void OnCollisionEnter(Collision collision)

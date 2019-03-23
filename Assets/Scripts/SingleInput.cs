@@ -21,6 +21,8 @@ public class SingleInput : MonoBehaviour
     public Action onDoublePress;
     public Action onLongPress;
 
+    public bool keyHeldDown;
+
     private void Update()
     {
         if (Input.GetKeyDown(inputKey))
@@ -40,6 +42,8 @@ public class SingleInput : MonoBehaviour
                 pressTime = Time.time;
                 _singlePressRoutine = StartCoroutine(SinglePress());
             }
+
+            keyHeldDown = false;
         }
 
         if (Input.GetKey(inputKey))
@@ -51,12 +55,19 @@ public class SingleInput : MonoBehaviour
                 pressCount = 0;
                 pressTime = 0;
             }
+            keyHeldDown = true;
+        }
+
+        if (Input.GetKeyUp(inputKey))
+        {
+            keyHeldDown = false;
         }
     }
     public IEnumerator SinglePress()
     {
         yield return new WaitForSeconds(_doublePressTime);
-        if (pressCount == 1)
+        yield return new WaitUntil(() => !keyHeldDown);
+        if (pressCount == 1 && !keyHeldDown)
         {
             pressCount = 0;
             onSinglePress?.Invoke();
