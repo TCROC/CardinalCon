@@ -15,6 +15,10 @@ public class Split_Screen : MonoBehaviour
         mainCamera.transform.position = new Vector3(charPosX, cameraOffset, charPosX);
         mainCamera.rotation = Quaternion.Euler(0f, 0f, 0f);
 
+        this.transform.position = new Vector3(charPosX, cameraOffset, charPosX);
+        
+
+
 
     }
 
